@@ -26,4 +26,11 @@ public class PlayerRepositoryTests {
             .extracting("nickname")
             .containsOnly("john", "peter");
     }
+
+    @Test
+    public void testFindByNickname() {
+        var john = playerRepository.findByNickname("john");
+        assertThat(john).isNotNull();
+        assertThat(john.getNickname()).isEqualTo("john");
+    }
 }
