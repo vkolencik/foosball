@@ -20,6 +20,10 @@ public class Player {
 
     private String nickname;
 
+    private int wins;
+
+    private int losses;
+
     public Long getId() {
         return id;
     }
@@ -36,17 +40,35 @@ public class Player {
         this.nickname = nickname;
     }
 
+    public int getWins() {
+        return wins;
+    }
+
+    public void setWins(int wins) {
+        this.wins = wins;
+    }
+
+    public int getLosses() {
+        return losses;
+    }
+
+    public void setLosses(int losses) {
+        this.losses = losses;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;
-        return getId().equals(player.getId())
+        return getWins() == player.getWins()
+            && getLosses() == player.getLosses()
+            && getId().equals(player.getId())
             && getNickname().equals(player.getNickname());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getNickname());
+        return Objects.hash(getId(), getNickname(), getWins(), getLosses());
     }
 }
