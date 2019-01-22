@@ -1,6 +1,6 @@
 package com.github.vkolencik.foosball.dto;
 
-public enum PlayerSort {
+public enum PlayerOrder {
     WINS("wins"),
     LOSSES("losses");
 
@@ -10,7 +10,7 @@ public enum PlayerSort {
         return propertyName;
     }
 
-    PlayerSort(String propertyName) {
+    PlayerOrder(String propertyName) {
         this.propertyName = propertyName;
     }
 }
