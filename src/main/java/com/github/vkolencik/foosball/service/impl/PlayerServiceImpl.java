@@ -1,6 +1,6 @@
 package com.github.vkolencik.foosball.service.impl;
 
-import com.github.vkolencik.foosball.dto.PlayerSort;
+import com.github.vkolencik.foosball.dto.PlayerOrder;
 import com.github.vkolencik.foosball.dto.PlayerDto;
 import com.github.vkolencik.foosball.entity.Player;
 import com.github.vkolencik.foosball.repository.PlayerRepository;
@@ -29,7 +29,7 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public List<PlayerDto> getPlayers(PlayerSort sortProperty, Boolean ascending) {
+    public List<PlayerDto> getPlayers(PlayerOrder sortProperty, Boolean ascending) {
 
         Sort sort = Sort.by(
             ascending
