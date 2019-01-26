@@ -4,10 +4,12 @@ import com.github.vkolencik.foosball.dto.PlayerDto;
 import com.github.vkolencik.foosball.dto.PlayerOrder;
 import com.github.vkolencik.foosball.service.PlayerService;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -45,11 +47,25 @@ public class PlayerController {
     public PlayerDto getPlayer(@PathVariable("nickname") String nickname) {
         var player = playerService.getPlayer(nickname);
         if (player == null) {
-            throw new ResponseStatusException(
-                HttpStatus.NOT_FOUND,
-                "Player with nickname \"" + nickname + "\" not found.");
+            return throwPlayerNotFound(nickname);
         }
 
         return player;
+    }
+
+    @DeleteMapping("/{nickname}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletePlayer(@PathVariable("nickname") String nickname) {
+        if (!playerService.playerExists(nickname)) {
+            throwPlayerNotFound(nickname);
+        }
+
+        playerService.deletePlayerByNickname(nickname);
+    }
+
+    private PlayerDto throwPlayerNotFound(@PathVariable("nickname") String nickname) {
+        throw new ResponseStatusException(
+            HttpStatus.NOT_FOUND,
+            "Player with nickname \"" + nickname + "\" not found.");
     }
 }

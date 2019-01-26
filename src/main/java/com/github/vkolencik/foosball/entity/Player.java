@@ -24,6 +24,9 @@ public class Player {
 
     private int losses;
 
+    private boolean active;
+
+    @SuppressWarnings("WeakerAccess")
     public Long getId() {
         return id;
     }
@@ -56,6 +59,14 @@ public class Player {
         this.losses = losses;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -63,12 +74,13 @@ public class Player {
         Player player = (Player) o;
         return getWins() == player.getWins()
             && getLosses() == player.getLosses()
-            && getId().equals(player.getId())
-            && getNickname().equals(player.getNickname());
+            && isActive() == player.isActive()
+            && Objects.equals(getId(), player.getId())
+            && Objects.equals(getNickname(), player.getNickname());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getNickname(), getWins(), getLosses());
+        return Objects.hash(getId(), getNickname(), getWins(), getLosses(), isActive());
     }
 }

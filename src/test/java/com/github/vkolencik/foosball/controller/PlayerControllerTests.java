@@ -17,6 +17,10 @@ import java.util.Arrays;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -81,5 +85,27 @@ public class PlayerControllerTests {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$", hasSize(2)))
             .andExpect(jsonPath("$[0].nickname", is(john.getNickname())));
+    }
+
+    @Test
+    public void testDeletePlayerReturnsNoContent() throws Exception {
+        var nickname = "john";
+        given(playerService.playerExists(nickname)).willReturn(true);
+
+        mockMvc.perform(delete("/players/" + nickname).contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNoContent());
+
+        verify(playerService, times(1)).deletePlayerByNickname(nickname);
+    }
+
+    @Test
+    public void testDeleteNonexistentPlayerReturnsNotFound() throws Exception {
+        var nickname = "john";
+        given(playerService.playerExists(nickname)).willReturn(false);
+
+        mockMvc.perform(delete("/players/" + nickname).contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound());
+
+        verify(playerService, never()).deletePlayerByNickname(nickname);
     }
 }
