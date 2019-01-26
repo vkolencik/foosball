@@ -1,7 +1,7 @@
 package com.github.vkolencik.foosball.service.impl;
 
-import com.github.vkolencik.foosball.dto.PlayerOrder;
 import com.github.vkolencik.foosball.dto.PlayerDto;
+import com.github.vkolencik.foosball.dto.PlayerOrder;
 import com.github.vkolencik.foosball.entity.Player;
 import com.github.vkolencik.foosball.repository.PlayerRepository;
 import com.github.vkolencik.foosball.service.PlayerService;
@@ -24,7 +24,7 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public PlayerDto getPlayer(String nickname) {
-        Player player = playerRepository.findByNickname(nickname);
+        var player = playerRepository.findByNickname(nickname);
         return player != null ? mapToDto(player) : null;
     }
 
@@ -38,6 +38,17 @@ public class PlayerServiceImpl implements PlayerService {
         List<Player> players = playerRepository.findAll(sort);
 
         return players.stream().map(this::mapToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean playerExists(String nickname) {
+        return playerRepository.findByNickname(nickname) != null;
+    }
+
+    @Override
+    public void deletePlayerByNickname(String nickname) {
+        var player = playerRepository.findByNickname(nickname);
+        player.setActive(false);
     }
 
     private PlayerDto mapToDto(Player player) {

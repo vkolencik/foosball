@@ -29,6 +29,7 @@ public class PlayerServiceTests {
         john.setNickname("john");
         john.setWins(1);
         john.setLosses(2);
+        john.setActive(true);
         given(playerRepository.findByNickname(john.getNickname())).willReturn(john);
     }
 
@@ -41,10 +42,23 @@ public class PlayerServiceTests {
     }
 
     @Test
-    public void testByNonexistentNickname() {
+    public void testFindByNonexistentNickname() {
         assertThat(playerService.getPlayer("asdf")).isNull();
     }
 
+    @Test
+    public void testPlayerExists() {
+        assertThat(playerService.playerExists(john.getNickname())).isEqualTo(true);
+    }
 
+    @Test
+    public void testPlayerDoesNotExist() {
+        assertThat(playerService.playerExists("asdf")).isEqualTo(false);
+    }
 
+    @Test
+    public void testDelete() {
+        playerService.deletePlayerByNickname(john.getNickname());
+        assertThat(john.isActive()).isEqualTo(false);
+    }
 }
