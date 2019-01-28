@@ -27,6 +27,11 @@ public class GameServiceImpl implements GameService {
             .collect(Collectors.toList());
     }
 
+    @Override
+    public GameDto findGame(long gameId) {
+        return gameRepository.findById(gameId).map(this::mapToDto).orElse(null);
+    }
+
     private GameDto mapToDto(Game game) {
         var dto = new GameDto();
         dto.setId(game.getId());

@@ -16,4 +16,6 @@ public interface GameService {
      * @return list of all games
      */
     List<GameDto> listAllGames();
+
+    GameDto findGame(long gameId);
 }

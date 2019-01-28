@@ -26,13 +26,19 @@ public class GameControllerTests {
     @MockBean
     private GameService gameService;
 
+    private GameDto game = new GameDto(
+        new String[]{"homer", "moe"},
+        new String[]{"lenny", "carl"},
+        Team.A
+    );
+
+    {
+        game.setId(1L);
+    }
+
     @Test
     public void testListGames() throws Exception {
-        var games = Collections.singletonList(new GameDto(
-            new String[] {"homer", "moe"},
-            new String[] {"lenny", "carl"},
-            Team.A
-        ));
+        var games = Collections.singletonList(game);
 
         given(gameService.listAllGames()).willReturn(games);
 
@@ -40,8 +46,26 @@ public class GameControllerTests {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$", hasSize(1)))
             .andExpect(jsonPath("$[0].winningTeam", is("A")))
-            .andExpect(jsonPath("$[0].teamA[0]", is("homer")));
+            .andExpect(jsonPath("$[0].teamA[0]", is("homer")))
+            .andExpect(jsonPath("$[0].id").doesNotExist()); // check that ID is not returned
     }
 
+    @Test
+    public void testGetGameById() throws Exception {
+        given(gameService.findGame(game.getId())).willReturn(game);
+
+        mockMvc.perform(get("/games/" + game.getId()))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.winningTeam", is("A")));
+    }
+
+    @Test
+    public void testNonexistentGameReturnsNotFound() throws Exception {
+        var id = 1L;
+        given(gameService.findGame(id)).willReturn(null);
+
+        mockMvc.perform(get("/games/" + id))
+            .andExpect(status().isNotFound());
+    }
 
 }
