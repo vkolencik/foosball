@@ -1,4 +1,4 @@
-package com.github.vkolencik.foosball.entity;
+package com.github.vkolencik.foosball.player;
 
 import org.hibernate.annotations.Where;
 
@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Objects;
 
+@SuppressWarnings("WeakerAccess")
 @Entity
 @Table(name = "players")
 @Where(clause = "active = true")
@@ -26,7 +27,6 @@ public class Player {
 
     private boolean active;
 
-    @SuppressWarnings("WeakerAccess")
     public Long getId() {
         return id;
     }

@@ -1,6 +1,5 @@
-package com.github.vkolencik.foosball.repository;
+package com.github.vkolencik.foosball.player;
 
-import com.github.vkolencik.foosball.entity.Player;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

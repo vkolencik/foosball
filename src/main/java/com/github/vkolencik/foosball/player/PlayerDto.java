@@ -1,5 +1,6 @@
-package com.github.vkolencik.foosball.dto;
+package com.github.vkolencik.foosball.player;
 
+@SuppressWarnings("WeakerAccess")
 public class PlayerDto {
 
     private String nickname;

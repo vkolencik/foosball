@@ -1,14 +1,10 @@
-package com.github.vkolencik.foosball.controller;
+package com.github.vkolencik.foosball.player;
 
-import com.github.vkolencik.foosball.dto.PlayerDto;
-import com.github.vkolencik.foosball.dto.PlayerOrder;
-import com.github.vkolencik.foosball.service.PlayerService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 

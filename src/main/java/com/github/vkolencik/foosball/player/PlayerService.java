@@ -1,7 +1,4 @@
-package com.github.vkolencik.foosball.service;
-
-import com.github.vkolencik.foosball.dto.PlayerDto;
-import com.github.vkolencik.foosball.dto.PlayerOrder;
+package com.github.vkolencik.foosball.player;
 
 import java.util.List;
 

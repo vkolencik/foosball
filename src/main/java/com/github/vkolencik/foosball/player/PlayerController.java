@@ -1,8 +1,5 @@
-package com.github.vkolencik.foosball.controller;
+package com.github.vkolencik.foosball.player;
 
-import com.github.vkolencik.foosball.dto.PlayerDto;
-import com.github.vkolencik.foosball.dto.PlayerOrder;
-import com.github.vkolencik.foosball.service.PlayerService;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

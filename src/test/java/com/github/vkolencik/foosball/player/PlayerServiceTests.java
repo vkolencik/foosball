@@ -1,21 +1,15 @@
-package com.github.vkolencik.foosball.service;
+package com.github.vkolencik.foosball.player;
 
-import com.github.vkolencik.foosball.dto.PlayerDto;
-import com.github.vkolencik.foosball.entity.Player;
-import com.github.vkolencik.foosball.repository.PlayerRepository;
-import com.github.vkolencik.foosball.service.impl.PlayerServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.MockitoPostProcessor;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @RunWith(SpringRunner.class)
