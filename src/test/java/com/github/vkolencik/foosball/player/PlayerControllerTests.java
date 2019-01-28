@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -108,7 +109,7 @@ public class PlayerControllerTests {
     public void testAddDuplicatePlayerReturnsError() throws Exception {
         given(playerService.playerExistsIncludingInactive(nickname)).willReturn(true);
 
-        mockMvc.perform(put("/players").content(nickname))
+        mockMvc.perform(put("/players").contentType(MediaType.TEXT_PLAIN).content(nickname))
             .andExpect(status().isBadRequest());
 
         verify(playerService, never()).createPlayer(nickname);
@@ -118,7 +119,7 @@ public class PlayerControllerTests {
     public void testPlayerIsCreated() throws Exception {
         given(playerService.playerExistsIncludingInactive(nickname)).willReturn(false);
 
-        mockMvc.perform(put("/players").content(nickname))
+        mockMvc.perform(put("/players").contentType(MediaType.TEXT_PLAIN).content(nickname))
             .andExpect(status().isCreated());
     }
 }
