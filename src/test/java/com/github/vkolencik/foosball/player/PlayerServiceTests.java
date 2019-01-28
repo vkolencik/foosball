@@ -69,5 +69,6 @@ public class PlayerServiceTests {
         playerService.createPlayer(john.getNickname());
         verify(playerRepository).save(playerCaptor.capture());
         assertThat(playerCaptor.getValue().getNickname()).isEqualTo(john.getNickname());
+        assertThat(playerCaptor.getValue().isActive()).isTrue();
     }
 }
