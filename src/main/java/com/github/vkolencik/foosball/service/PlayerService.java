@@ -14,4 +14,8 @@ public interface PlayerService {
     void deletePlayerByNickname(String nickname);
 
     boolean playerExists(String nickname);
+
+    boolean playerExistsIncludingInactive(String nickname);
+
+    void createPlayer(String nickname);
 }
