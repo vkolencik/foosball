@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -22,7 +23,7 @@ public class PlayerRepositoryTests {
 
     @Test
     public void testOnlyActivePlayersAreReturned() {
-        var activePlayers = playerRepository.findAll();
+        var activePlayers = playerRepository.findAll(Sort.by("wins").descending());
         assertThat(activePlayers)
             .extracting("nickname")
             .containsOnly("john", "peter");
@@ -33,6 +34,12 @@ public class PlayerRepositoryTests {
         var john = playerRepository.findByNickname("john");
         assertThat(john).isNotNull();
         assertThat(john.getNickname()).isEqualTo("john");
+    }
+
+    @Test
+    public void testFindByNicknameReturnsNullForInactivePlayer() {
+        var nonExistentPlayer = playerRepository.findByNickname("asdf");
+        assertThat(nonExistentPlayer).isNull();
     }
 
     @Test
