@@ -54,7 +54,7 @@ public class PlayerController {
         return player;
     }
 
-    @PutMapping
+    @PutMapping(consumes = "text/plain")
     public ResponseEntity createPlayer(@RequestBody String nickname) throws ResponseStatusException {
         if (playerService.playerExistsIncludingInactive(nickname)) {
             throw new ResponseStatusException(

@@ -12,7 +12,6 @@ import java.util.Objects;
 @SuppressWarnings("WeakerAccess")
 @Entity
 @Table(name = "players")
-@Where(clause = "active = true")
 public class Player {
 
     @Id

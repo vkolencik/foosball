@@ -55,6 +55,7 @@ public class PlayerServiceImpl implements PlayerService {
     public void createPlayer(String nickname) {
         var player = new Player();
         player.setNickname(nickname);
+        player.setActive(true);
         playerRepository.save(player);
     }
 
