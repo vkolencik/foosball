@@ -22,6 +22,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -37,14 +38,14 @@ public class PlayerControllerTests {
 
     private static PlayerDto john = new PlayerDto("john", 1, 2);
     private static PlayerDto victor = new PlayerDto("victor", 10, 0);
-
+    private static String nickname = john.getNickname();
 
     @Test
     public void testGetPlayerByNickname() throws Exception {
 
-        given(playerService.getPlayer("john")).willReturn(john);
+        given(playerService.getPlayer(john.getNickname())).willReturn(john);
 
-        mockMvc.perform(get("/players/john").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/players/" + john.getNickname()))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.nickname", is(john.getNickname())))
             .andExpect(jsonPath("$.wins", is(john.getWins())))
@@ -57,7 +58,7 @@ public class PlayerControllerTests {
         given(playerService.getPlayers(PlayerOrder.WINS, false))
             .willReturn(Arrays.asList(victor, john));
 
-        mockMvc.perform(get("/players").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/players"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$", hasSize(2)))
             .andExpect(jsonPath("$[0].nickname", is(victor.getNickname())));
@@ -69,7 +70,7 @@ public class PlayerControllerTests {
         given(playerService.getPlayers(PlayerOrder.WINS, true))
             .willReturn(Arrays.asList(john, victor));
 
-        mockMvc.perform(get("/players?asc").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/players?asc"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$", hasSize(2)))
             .andExpect(jsonPath("$[0].nickname", is(john.getNickname())));
@@ -81,7 +82,7 @@ public class PlayerControllerTests {
         given(playerService.getPlayers(PlayerOrder.LOSSES, false))
             .willReturn(Arrays.asList(john, victor));
 
-        mockMvc.perform(get("/players?order-by=losses").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/players?order-by=losses"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$", hasSize(2)))
             .andExpect(jsonPath("$[0].nickname", is(john.getNickname())));
@@ -89,10 +90,9 @@ public class PlayerControllerTests {
 
     @Test
     public void testDeletePlayerReturnsNoContent() throws Exception {
-        var nickname = "john";
         given(playerService.playerExists(nickname)).willReturn(true);
 
-        mockMvc.perform(delete("/players/" + nickname).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(delete("/players/" + nickname))
             .andExpect(status().isNoContent());
 
         verify(playerService, times(1)).deletePlayerByNickname(nickname);
@@ -100,12 +100,29 @@ public class PlayerControllerTests {
 
     @Test
     public void testDeleteNonexistentPlayerReturnsNotFound() throws Exception {
-        var nickname = "john";
         given(playerService.playerExists(nickname)).willReturn(false);
 
-        mockMvc.perform(delete("/players/" + nickname).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(delete("/players/" + nickname))
             .andExpect(status().isNotFound());
 
         verify(playerService, never()).deletePlayerByNickname(nickname);
+    }
+
+    @Test
+    public void testAddDuplicatePlayerReturnsError() throws Exception {
+        given(playerService.playerExistsIncludingInactive(nickname)).willReturn(true);
+
+        mockMvc.perform(put("/players").content(nickname))
+            .andExpect(status().isBadRequest());
+
+        verify(playerService, never()).createPlayer(nickname);
+    }
+
+    @Test
+    public void testPlayerIsCreated() throws Exception {
+        given(playerService.playerExistsIncludingInactive(nickname)).willReturn(false);
+
+        mockMvc.perform(put("/players").content(nickname))
+            .andExpect(status().isCreated());
     }
 }

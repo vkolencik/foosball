@@ -3,10 +3,14 @@ package com.github.vkolencik.foosball.controller;
 import com.github.vkolencik.foosball.dto.PlayerDto;
 import com.github.vkolencik.foosball.dto.PlayerOrder;
 import com.github.vkolencik.foosball.service.PlayerService;
+import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -51,6 +55,22 @@ public class PlayerController {
         }
 
         return player;
+    }
+
+    @PutMapping
+    public ResponseEntity createPlayer(@RequestBody String nickname) throws ResponseStatusException {
+        if (playerService.playerExistsIncludingInactive(nickname)) {
+            throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST,
+                "Player with nickname " + nickname + "already exists");
+        }
+
+        playerService.createPlayer(nickname);
+
+        var link = ControllerLinkBuilder.linkTo(
+            ControllerLinkBuilder.methodOn(PlayerController.class).getPlayer(nickname));
+
+        return ResponseEntity.created(link.toUri()).build();
     }
 
     @DeleteMapping("/{nickname}")
