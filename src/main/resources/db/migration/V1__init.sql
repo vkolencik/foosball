@@ -1,4 +1,0 @@
-CREATE TABLE players (
-  nickname VARCHAR PRIMARY KEY NOT NULL,
-  active BOOLEAN NOT NULL DEFAULT true
-)
