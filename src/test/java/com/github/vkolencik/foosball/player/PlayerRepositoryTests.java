@@ -25,8 +25,8 @@ public class PlayerRepositoryTests {
     public void testOnlyActivePlayersAreReturned() {
         var activePlayers = playerRepository.findAll(Sort.by("wins").descending());
         assertThat(activePlayers)
-            .extracting("nickname")
-            .containsOnly("john", "peter");
+            .extracting("active")
+            .containsOnly(true);
     }
 
     @Test
