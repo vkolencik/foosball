@@ -1,4 +1,4 @@
-package com.github.vkolencik.foosball.dto;
+package com.github.vkolencik.foosball.player;
 
 public enum PlayerOrder {
     WINS("wins"),

@@ -1,6 +1,5 @@
-package com.github.vkolencik.foosball.repository;
+package com.github.vkolencik.foosball.player;
 
-import com.github.vkolencik.foosball.entity.Player;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

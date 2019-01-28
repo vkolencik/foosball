@@ -1,10 +1,5 @@
-package com.github.vkolencik.foosball.service.impl;
+package com.github.vkolencik.foosball.player;
 
-import com.github.vkolencik.foosball.dto.PlayerDto;
-import com.github.vkolencik.foosball.dto.PlayerOrder;
-import com.github.vkolencik.foosball.entity.Player;
-import com.github.vkolencik.foosball.repository.PlayerRepository;
-import com.github.vkolencik.foosball.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
