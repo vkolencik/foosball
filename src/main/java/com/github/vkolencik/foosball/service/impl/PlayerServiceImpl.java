@@ -46,9 +46,21 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
+    public boolean playerExistsIncludingInactive(String nickname) {
+        return playerRepository.playerExistsIncludingInactive(nickname);
+    }
+
+    @Override
     public void deletePlayerByNickname(String nickname) {
         var player = playerRepository.findByNickname(nickname);
         player.setActive(false);
+    }
+
+    @Override
+    public void createPlayer(String nickname) {
+        var player = new Player();
+        player.setNickname(nickname);
+        playerRepository.save(player);
     }
 
     private PlayerDto mapToDto(Player player) {
