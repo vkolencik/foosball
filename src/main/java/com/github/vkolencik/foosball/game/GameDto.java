@@ -9,6 +9,15 @@ import java.util.Objects;
 @SuppressWarnings("WeakerAccess")
 public class GameDto {
 
+    public GameDto() {
+    }
+
+    public GameDto(String[] teamA, String[] teamB, Team winningTeam) {
+        this.teamA = teamA;
+        this.teamB = teamB;
+        this.winningTeam = winningTeam;
+    }
+
     @JsonIgnore
     private Long id;
 
