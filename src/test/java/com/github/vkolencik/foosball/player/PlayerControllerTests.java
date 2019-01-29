@@ -109,7 +109,10 @@ public class PlayerControllerTests {
     public void testAddDuplicatePlayerReturnsError() throws Exception {
         given(playerService.playerExistsIncludingInactive(nickname)).willReturn(true);
 
-        mockMvc.perform(put("/players").contentType(MediaType.TEXT_PLAIN).content(nickname))
+        mockMvc.perform(
+            put("/players")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(playerToJson(nickname)))
             .andExpect(status().isBadRequest());
 
         verify(playerService, never()).createPlayer(nickname);
@@ -119,7 +122,14 @@ public class PlayerControllerTests {
     public void testPlayerIsCreated() throws Exception {
         given(playerService.playerExistsIncludingInactive(nickname)).willReturn(false);
 
-        mockMvc.perform(put("/players").contentType(MediaType.TEXT_PLAIN).content(nickname))
+        mockMvc.perform(
+            put("/players")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(playerToJson(nickname)))
             .andExpect(status().isCreated());
+    }
+
+    private String playerToJson(String nickname) {
+        return "{\"nickname\":\"" + nickname + "\"}";
     }
 }
