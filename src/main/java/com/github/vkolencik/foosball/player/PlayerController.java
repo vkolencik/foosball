@@ -54,8 +54,9 @@ public class PlayerController {
         return player;
     }
 
-    @PutMapping(consumes = "text/plain")
-    public ResponseEntity createPlayer(@RequestBody String nickname) throws ResponseStatusException {
+    @PutMapping
+    public ResponseEntity createPlayer(@RequestBody CreatePlayerDto playerDto) throws ResponseStatusException {
+        var nickname = playerDto.getNickname();
         if (playerService.playerExistsIncludingInactive(nickname)) {
             throw new ResponseStatusException(
                 HttpStatus.BAD_REQUEST,
