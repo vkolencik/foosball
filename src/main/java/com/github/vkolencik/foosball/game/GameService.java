@@ -18,4 +18,6 @@ public interface GameService {
     List<GameDto> listAllGames();
 
     GameDto findGame(long gameId);
+
+    long saveGame(GameDto gameDto);
 }

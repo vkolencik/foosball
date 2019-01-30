@@ -3,6 +3,7 @@ package com.github.vkolencik.foosball.game;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.validation.constraints.Size;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -21,8 +22,10 @@ public class GameDto {
     @JsonIgnore
     private Long id;
 
+    @Size(min = 2, max = 2, message = "Each team must have exactly two players")
     private String[] teamA;
 
+    @Size(min = 2, max = 2, message = "Each team must have exactly two players")
     private String[] teamB;
 
     private Team winningTeam;

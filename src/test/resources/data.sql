@@ -1,3 +1,6 @@
+DELETE FROM games;
+DELETE FROM players;
+
 INSERT INTO players (nickname, active) VALUES
   ('john', true),
   ('peter', true),
