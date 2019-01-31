@@ -1,4 +1,4 @@
-package com.github.vkolencik.foosball.security;
+package com.github.vkolencik.foosball.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
