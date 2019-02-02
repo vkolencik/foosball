@@ -3,78 +3,161 @@ HOST: http://polls.apiblueprint.org/
 
 # Foosball
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+API pro správu Foosball her.
 
-## Questions Collection [/questions]
+## Všichni hráči [/players{?order_by,asc}]
 
-### List All Questions [GET]
+### Seznam všech hráčů [GET]
+
++ Parameters
+
+    + order_by (enum[string], optional) - Řazení podle výher nebo proher.
+
+        + Members
+
+            + wins
+            + losses
+
+    + asc (optional) - Vzestupné řazení (jinak se řadí sestupně)
 
 + Response 200 (application/json)
 
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
+    + Attributes
 
-### Create a New Question [POST]
+        + nickname: john (string) - přezdívka hráče
+        + wins: 10 (number) - počet výher
+        + losses: 3 (number) - počet proher
 
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
+    + Body
 
-+ Request (application/json)
-
-        {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
+            [
+                {
+                    "nickname": "john",
+                    "wins": 10,
+                    "losses": 3,
+                },
+                {
+                    "nickname": "james",
+                    "wins": 1,
+                    "losses": 0
+                }
             ]
-        }
 
-+ Response 201 (application/json)
+### Vytvoření nového hráče [PUT]
 
-    + Headers
++ Request
 
-            Location: /questions/2
+    + Attributes
+
+        + nickname: john (string)
+
+            Přezdívka hráče. Přezdívka musí být unikátní, včetně již smazaných hráčů.
 
     + Body
 
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
+                "nickname": "james"
             }
+
++ Response 201
+
+    + Headers
+
+            Location: /players/james
+
+## Hráč [/players/{nickname}]
+
++ Parameters
+
+    + nickname: john (string) - Přezdívka hráče (přezdívky musí být unikátní)
+
+### Zobrazení konkrétního hráče [GET]
+
++ Response 200 (application/json)
+
+    + Attributes
+
+        + nickname: john (string) - přezdívka hráče
+        + wins: 10 (number) - počet výher
+        + losses: 3 (number) - počet proher
+
+### Smazání hráče [DELETE]
+
+Po smazání hráče nejdou vytvářet nové hry ve kterých by figuroval, ale jeho již existující hry se nadále zobrazují.
+
++ Response 204
+
+## Seznam her [/games]
+
+### Zobrazení seznamu her [GET]
+
++ Response 200 (application/json)
+
+    + Attributes (array[Game])
+
+    + Body
+
+            [
+                {
+                    "teamA": [ "moe", "homer" ],
+                    "teamB": [ "rick", "morty" ],
+                    "winningTeam": "B"
+                },
+                {
+                    "teamA": [ "bart", "lisa" ],
+                    "teamB": [ "jake", "finn" ],
+                    "winningTeam": "B"
+                }
+            ]
+
+### Vytvoření hry [PUT]
+
++ Request (application/json)
+
+    + Attributes (Game)
+
+    + Body
+
+            {
+                "teamA": [ "bart", "lisa" ],
+                "teamB": [ "jake", "finn" ],
+                "winningTeam": "B"
+            }
+
++ Response 201
+
+    + Headers
+
+            Location: /games/7
+
+## Hra [/games/{id}]
+
+### Zobrazení konkrétní hry [GET]
+
++ Parameters
+
+    + id (number, required) - ID hry
+
++ Response 200
+
+    + Attributes (Game)
+
+    + Body
+
+            {
+                "teamA": [ "bart", "lisa" ],
+                "teamB": [ "jake", "finn" ],
+                "winningTeam": "B"
+            }
+
+## Data Structures
+
+### Game
++ teamA (array[string])
++ teamB (array[string])
++ winningTeam (enum[string])
+
+    + Members
+
+        + A
+        + B
