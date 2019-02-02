@@ -90,3 +90,74 @@ Po smazání hráče nejdou vytvářet nové hry ve kterých by figuroval, ale j
 ## Seznam her [/games]
 
 ### Zobrazení seznamu her [GET]
+
++ Response 200 (application/json)
+
+    + Attributes (array[Game])
+
+    + Body
+
+            [
+                {
+                    "teamA": [ "moe", "homer" ],
+                    "teamB": [ "rick", "morty" ],
+                    "winningTeam": "B"
+                },
+                {
+                    "teamA": [ "bart", "lisa" ],
+                    "teamB": [ "jake", "finn" ],
+                    "winningTeam": "B"
+                }
+            ]
+
+### Vytvoření hry [PUT]
+
++ Request (application/json)
+
+    + Attributes (Game)
+
+    + Body
+
+            {
+                "teamA": [ "bart", "lisa" ],
+                "teamB": [ "jake", "finn" ],
+                "winningTeam": "B"
+            }
+
++ Response 201
+
+    + Headers
+
+            Location: /games/7
+
+## Hra [/games/{id}]
+
+### Zobrazení konkrétní hry [GET]
+
++ Parameters
+
+    + id (number, required) - ID hry
+
++ Response 200
+
+    + Attributes (Game)
+
+    + Body
+
+            {
+                "teamA": [ "bart", "lisa" ],
+                "teamB": [ "jake", "finn" ],
+                "winningTeam": "B"
+            }
+
+## Data Structures
+
+### Game
++ teamA (array[string])
++ teamB (array[string])
++ winningTeam (enum[string])
+
+    + Members
+
+        + A
+        + B
