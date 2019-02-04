@@ -13,13 +13,13 @@ public class GameDto {
     public GameDto() {
     }
 
-    public GameDto(String[] teamA, String[] teamB, Team winningTeam) {
+    public GameDto(Long id, String[] teamA, String[] teamB, Team winningTeam) {
+        this.id = id;
         this.teamA = teamA;
         this.teamB = teamB;
         this.winningTeam = winningTeam;
     }
 
-    @JsonIgnore
     private Long id;
 
     @Size(min = 2, max = 2, message = "Each team must have exactly two players")

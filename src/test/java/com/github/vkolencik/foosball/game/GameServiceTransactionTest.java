@@ -51,6 +51,7 @@ public class GameServiceTransactionTest {
 
         try {
             gameService.saveGame(new GameDto(
+                1L,
                 new String[] { "john", "peter" },
                 new String[] { "homer", "moe" },
                 Team.A));
@@ -74,6 +75,7 @@ public class GameServiceTransactionTest {
         var homerLossesBefore = playerRepository.findByNickname("homer").getLosses();
 
         gameService.saveGame(new GameDto(
+            1L,
             new String[] { "john", "peter" },
             new String[] { "homer", "moe" },
             Team.A));

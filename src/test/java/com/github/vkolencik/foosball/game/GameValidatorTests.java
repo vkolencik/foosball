@@ -23,6 +23,7 @@ public class GameValidatorTests {
     private GameDtoValidator validator;
 
     private GameDto validGame = new GameDto(
+        1L,
         new String[]{"homer", "moe"},
         new String[]{"lenny", "carl"},
         Team.A
