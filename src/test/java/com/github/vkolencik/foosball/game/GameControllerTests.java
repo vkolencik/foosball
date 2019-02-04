@@ -33,6 +33,7 @@ public class GameControllerTests {
     private PlayerService playerService;
 
     private GameDto game = new GameDto(
+        1L,
         new String[]{"homer", "moe"},
         new String[]{"lenny", "carl"},
         Team.A
@@ -53,7 +54,7 @@ public class GameControllerTests {
             .andExpect(jsonPath("$", hasSize(1)))
             .andExpect(jsonPath("$[0].winningTeam", is("A")))
             .andExpect(jsonPath("$[0].teamA[0]", is("homer")))
-            .andExpect(jsonPath("$[0].id").doesNotExist()); // check that ID is not returned
+            .andExpect(jsonPath("$[0].id", is(1)));
     }
 
     @Test
