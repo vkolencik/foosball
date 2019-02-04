@@ -1,5 +1,6 @@
 package com.github.vkolencik.foosball.game;
 
+import com.github.vkolencik.foosball.player.PlayerService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class GameControllerTests {
 
     @MockBean
     private GameService gameService;
+
+    @MockBean
+    private PlayerService playerService;
 
     private GameDto game = new GameDto(
         new String[]{"homer", "moe"},
