@@ -20,6 +20,20 @@ Run the app by running
 By default, the app runs on the local port 8080. This can be changed by setting the `server.port` environment
 variable. 
 
+## API
+
+API description in the API Blueprint format (in Czech) can be found in the `apiary.apib` file or on 
+http://foosball4.docs.apiary.io/ 
+
+## Authentication
+
+For simplicity, HTTP Basic authentication scheme is used. Actuator endpoints (`/actuator/health` etc.)
+are accessible without authentication. For other resources, authorization HTTP header must be added
+to the request. For simplicity, the user credentials are not stored in the database but hardcoded (username `user`,
+password `test`). HTTP header can be generated on sites like
+https://www.blitter.se/utils/basic-authentication-header-generator/, for the hardcoded user it's
+`Authorization: Basic dXNlcjp0ZXN0`.
+
 ## Usage examples
 
 These are some example requests using `curl` command:
@@ -70,20 +84,6 @@ Alternatively, a WAR file which can be deployed to external application server (
 ```
 
 The war file will then be available in `build/libs/foosball-0.0.1-SNAPSHOT.jar` 
-
-## Authentication
-
-For simplicity, HTTP Basic authentication scheme is used. Actuator endpoints (`/actuator/health` etc.)
-are accessible without authentication. For other resources, authorization HTTP header must be added
-to the request. For simplicity, the user credentials are not stored in the database but hardcoded (username `user`,
-password `test`). HTTP header can be generated on sites like
-https://www.blitter.se/utils/basic-authentication-header-generator/, for the hardcoded user it's
-`Authorization: Basic dXNlcjp0ZXN0`.
-
-## API
-
-API description in the API Blueprint format (in Czech) can be found in the `apiary.apib` file or on 
-http://foosball4.docs.apiary.io/ 
 
 ---
 
