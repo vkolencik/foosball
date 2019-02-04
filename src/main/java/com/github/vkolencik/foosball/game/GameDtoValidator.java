@@ -2,8 +2,6 @@ package com.github.vkolencik.foosball.game;
 
 
 import com.github.vkolencik.foosball.player.PlayerService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -11,12 +9,10 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
-@Component
 public class GameDtoValidator implements Validator {
 
     private PlayerService playerService;
 
-    @Autowired
     public GameDtoValidator(PlayerService playerService) {
         this.playerService = playerService;
     }
