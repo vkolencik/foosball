@@ -29,7 +29,7 @@ public class PlayerController {
 
     @GetMapping
     public List<PlayerDto> getPlayers(
-        @RequestParam(value = "order-by", defaultValue = "wins") String orderBy,
+        @RequestParam(value = "order_by", defaultValue = "wins") String orderBy,
         @RequestParam Map<String, String> queryMap) {
 
         PlayerOrder order;

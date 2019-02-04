@@ -81,7 +81,7 @@ public class PlayerControllerTests {
         given(playerService.getPlayers(PlayerOrder.LOSSES, false))
             .willReturn(Arrays.asList(john, victor));
 
-        mockMvc.perform(get("/players?order-by=losses"))
+        mockMvc.perform(get("/players?order_by=losses"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$", hasSize(2)))
             .andExpect(jsonPath("$[0].nickname", is(john.getNickname())));
